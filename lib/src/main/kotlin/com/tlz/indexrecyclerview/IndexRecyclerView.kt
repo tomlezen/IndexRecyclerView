@@ -131,7 +131,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 if (isIndexAdapter && !isTouchedIndexBar) {
                     val firstVisiblePosition = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    selectedPosition = (adapter as IndexRecyclerViewAdapter<*>).getAdapterPositionByIndexPosition(firstVisiblePosition)
+                    selectedPosition = (adapter as IndexRecyclerViewAdapter<*>).getIndexPositionByAdapterPosition(firstVisiblePosition)
                 }
             }
         })
@@ -234,7 +234,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
         if (indexList.isNotEmpty() && y > indexBarDrawnRectF.top + vPadding && y < indexBarDrawnRectF.bottom - vPadding) {
             val selectPosition = ((y - indexBarDrawnRectF.top - vPadding) / ((indexBarDrawnRectF.height() - 2 * vPadding) / indexList.size)).toInt()
             this.selectedPosition = if (selectPosition >= indexList.size) indexList.size - 1 else selectPosition
-            val scrollPosition = (adapter as IndexRecyclerViewAdapter<*>).getIndexPositionByAdapterPosition(this.selectedPosition)
+            val scrollPosition = (adapter as IndexRecyclerViewAdapter<*>).getAdapterPositionByIndexPosition(this.selectedPosition)
             (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(scrollPosition, 0)
             postInvalidate()
         }

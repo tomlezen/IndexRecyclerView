@@ -12,7 +12,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 interface IndexRecyclerViewAdapter<T : RecyclerView.ViewHolder> : StickyRecyclerHeadersAdapter<T> {
 
     @Deprecated("", ReplaceWith("getAdapterPositionByIndexPosition(position).toLong()"))
-    override fun getHeaderId(position: Int): Long = getAdapterPositionByIndexPosition(position).toLong()
+    override fun getHeaderId(position: Int): Long = getIndexPositionByAdapterPosition(position).toLong()
 
     @Deprecated("", ReplaceWith("onBindIndexViewHolder(holder, position)"))
     override fun onBindHeaderViewHolder(holder: T, position: Int) = onBindIndexViewHolder(holder, position)
@@ -28,14 +28,14 @@ interface IndexRecyclerViewAdapter<T : RecyclerView.ViewHolder> : StickyRecycler
     fun getIndexList(): List<Index>
 
     /**
-     * 根据索引position获取适配器位置.
+     * 根据适配器位置获取索引位置
      * @param position Int
      * @return Int
      */
     fun getIndexPositionByAdapterPosition(position: Int): Int
 
     /**
-     * 根据适配器位置获取索引位置.
+     * 根据索引position获取适配器位置.
      * @param position Int
      * @return Int
      */

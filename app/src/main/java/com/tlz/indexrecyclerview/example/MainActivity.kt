@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder:  RecyclerView.ViewHolder, position: Int, item: ItemData, subPosition: Int) {
-            holder.itemView.tv_item.text = position.toString() //item.data[subPosition]
+            holder.itemView.tv_item.text = item.data[subPosition]
         }
 
         override fun onCreateIndexViewHolder(parent: ViewGroup):  RecyclerView.ViewHolder =

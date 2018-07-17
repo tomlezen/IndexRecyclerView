@@ -20,7 +20,7 @@ abstract class SampleIndexRecyclerViewAdapter<D : SampleIndex, M : RecyclerView.
     override fun getIndexList(): List<Index> = data
 
     final override fun onBindIndexViewHolder(holder: N, position: Int) =
-            onBindIndexViewHolder(holder, position, data[getAdapterPositionByIndexPosition(position)])
+            onBindIndexViewHolder(holder, position, data[getIndexPositionByAdapterPosition(position)])
 
     final override fun onBindViewHolder(holder: M, position: Int) {
         val (dataPosition, subPosition) = getSubPositionByPosition(position)
@@ -30,7 +30,10 @@ abstract class SampleIndexRecyclerViewAdapter<D : SampleIndex, M : RecyclerView.
     abstract fun onBindIndexViewHolder(holder: N, position: Int, item: D)
     abstract fun onBindViewHolder(holder: M, position: Int, item: D, subPosition: Int)
 
-    override fun getAdapterPositionByIndexPosition(position: Int): Int {
+    override fun getAdapterPositionByIndexPosition(position: Int): Int =
+            if (position == 0) 0 else data.subList(0, position).sumBy { it.getDataCount() }
+
+    override fun getIndexPositionByAdapterPosition(position: Int): Int {
         var dataPosition = 0
         val size = data.size - 1
         for (i in (0..size)) {
@@ -43,23 +46,19 @@ abstract class SampleIndexRecyclerViewAdapter<D : SampleIndex, M : RecyclerView.
         return dataPosition
     }
 
-    override fun getIndexPositionByAdapterPosition(position: Int): Int =
-            if (position == 0) 0 else data.subList(0, position).sumBy { it.getDataCount() }
-
     protected open fun getSubPositionByPosition(position: Int): Pair<Int, Int> {
         var dataPosition = 0
         var subPosition = 0
         val size = data.size - 1
         for (i in (0..size)) {
+            dataPosition += data[i].getDataCount()
             if (dataPosition > position) {
-                subPosition = (position - dataPosition + data[i - 1].getDataCount())
-                dataPosition = i - 1
+                subPosition = (position - dataPosition + data[i].getDataCount())
+                dataPosition = i
                 break
             } else if (i == size) {
                 subPosition = (position - dataPosition)
                 dataPosition = size
-            } else {
-                dataPosition += data[i].getDataCount()
             }
         }
         return Pair(dataPosition, subPosition)
