@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 //        rv.addItemDecoration(StickyRecyclerHeadersDecoration(adapter))
         rv.adapter = adapter
         // 准备数据
-        adapter.setData((0 until 20).mapTo(mutableListOf(), {
+        adapter.setNewData((0 until 20).mapTo(mutableListOf(), {
             val count = Random().nextInt(8) + 1
             ItemData( (0 until count).mapTo(mutableListOf(), { it.toString() }), "${it + 1}, $count")
         }))

@@ -7,9 +7,10 @@ import android.support.v7.widget.RecyclerView
  * Data: 2018/7/6.
  * Time: 10:56.
  */
-abstract class SampleIndexRecyclerViewAdapter<in D : SampleIndex, M : RecyclerView.ViewHolder, N : RecyclerView.ViewHolder> : RecyclerView.Adapter<M>(), IndexRecyclerViewAdapter<N> {
+abstract class SampleIndexRecyclerViewAdapter<D : SampleIndex, M : RecyclerView.ViewHolder, N : RecyclerView.ViewHolder> : RecyclerView.Adapter<M>(), IndexRecyclerViewAdapter<N> {
 
-    private var data = mutableListOf<D>()
+    var data = mutableListOf<D>()
+        private set
 
     /** item数量. */
     private var _itemCount = 0
@@ -19,7 +20,7 @@ abstract class SampleIndexRecyclerViewAdapter<in D : SampleIndex, M : RecyclerVi
     override fun getIndexList(): List<Index> = data
 
     final override fun onBindIndexViewHolder(holder: N, position: Int) =
-        onBindIndexViewHolder(holder, position, data[getAdapterPositionByIndexPosition(position)])
+            onBindIndexViewHolder(holder, position, data[getAdapterPositionByIndexPosition(position)])
 
     final override fun onBindViewHolder(holder: M, position: Int) {
         val (dataPosition, subPosition) = getSubPositionByPosition(position)
@@ -43,9 +44,9 @@ abstract class SampleIndexRecyclerViewAdapter<in D : SampleIndex, M : RecyclerVi
     }
 
     override fun getIndexPositionByAdapterPosition(position: Int): Int =
-            if(position == 0) 0 else data.subList(0, position).sumBy { it.getDataCount() }
+            if (position == 0) 0 else data.subList(0, position).sumBy { it.getDataCount() }
 
-    private fun getSubPositionByPosition(position: Int): Pair<Int, Int> {
+    protected open fun getSubPositionByPosition(position: Int): Pair<Int, Int> {
         var dataPosition = 0
         var subPosition = 0
         val size = data.size - 1
@@ -68,7 +69,7 @@ abstract class SampleIndexRecyclerViewAdapter<in D : SampleIndex, M : RecyclerVi
      * 设置数据.
      * @param data List<D>
      */
-    fun setData(data: List<D>) {
+    fun setNewData(data: List<D>) {
         this.data.clear()
         this.data.addAll(data)
         _itemCount = this.data.sumBy { it.getDataCount() }

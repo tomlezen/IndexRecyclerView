@@ -219,7 +219,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
                 sendDismissMessage()
             }
         }
-        return if (isIntercept) true else super.onTouchEvent(e)
+        return if (isIntercept || isTouchedIndexBar) true else super.onTouchEvent(e)
     }
 
     private fun getAnimatorColor(color: Int) =
