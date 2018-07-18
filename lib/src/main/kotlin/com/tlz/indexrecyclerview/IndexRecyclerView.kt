@@ -131,7 +131,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 if (isIndexAdapter && !isTouchedIndexBar) {
                     val firstVisiblePosition = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    selectedPosition = (adapter as IndexRecyclerViewAdapter<*>).getIndexPositionByAdapterPosition(firstVisiblePosition)
+                    selectedPosition = (adapter as IndexRecyclerViewAdapter<*>).getIndexBarPositionByAdapterPosition(firstVisiblePosition)
                 }
             }
         })
@@ -164,20 +164,24 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
     @CallSuper
     override fun draw(c: Canvas?) {
         super.draw(c)
-        if (isIndexAdapter && (isIndexBarShowing || animator.isRunning)) {
+        if (isIndexAdapter && (isIndexBarShowing || animator.isRunning) && (adapter as IndexRecyclerViewAdapter<*>).getIndexList().isNotEmpty()) {
             c?.run {
-                // 绘制背景
-                indexDecoration.drawIndexBarBg(this, drawnPaint, indexBarDrawnRectF, getAnimatorColor(indexBarBackground))
+                // 判断当前高度是否足够绘制所有索引
+                drawnPaint.textSize = indexTextSize.toFloat()
+                if (indexBarDrawnRectF.height() > (drawnPaint.descent() - drawnPaint.ascent()) * (adapter as IndexRecyclerViewAdapter<*>).getIndexList().size) {
+                    // 绘制背景
+                    indexDecoration.drawIndexBarBg(this, drawnPaint, indexBarDrawnRectF, getAnimatorColor(indexBarBackground))
 
-                // 绘制索引文字.
-                drawIndexBarText(this)
+                    // 绘制索引文字.
+                    drawIndexBarText(this)
 
-                if (isTouchedIndexBar) {
-                    // 绘制预览框背景
-                    indexDecoration.drawPreviewBg(this, drawnPaint, previewIndexDrawnRectF, getAnimatorColor(previewIndexBackground), previewRectRadius.toFloat())
+                    if (isTouchedIndexBar) {
+                        // 绘制预览框背景
+                        indexDecoration.drawPreviewBg(this, drawnPaint, previewIndexDrawnRectF, getAnimatorColor(previewIndexBackground), previewRectRadius.toFloat())
 
-                    // 绘制预览索引文字
-                    drawPreviewIndex(this)
+                        // 绘制预览索引文字
+                        drawPreviewIndex(this)
+                    }
                 }
             }
         }
@@ -223,7 +227,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
     }
 
     private fun getAnimatorColor(color: Int) =
-        argbEvaluator.evaluate(animatorProgress, Color.TRANSPARENT, color) as Int
+            argbEvaluator.evaluate(animatorProgress, Color.TRANSPARENT, color) as Int
 
     /**
      * 计算选择的位置.

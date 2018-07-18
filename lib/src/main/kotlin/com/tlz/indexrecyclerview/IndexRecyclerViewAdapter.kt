@@ -35,6 +35,13 @@ interface IndexRecyclerViewAdapter<T : RecyclerView.ViewHolder> : StickyRecycler
     fun getIndexPositionByAdapterPosition(position: Int): Int
 
     /**
+     * 根据适配器位置获取索引条选中的位置
+     * @param position Int
+     * @return Int
+     */
+    fun getIndexBarPositionByAdapterPosition(position: Int): Int = getIndexPositionByAdapterPosition(position)
+
+    /**
      * 根据索引position获取适配器位置.
      * @param position Int
      * @return Int
