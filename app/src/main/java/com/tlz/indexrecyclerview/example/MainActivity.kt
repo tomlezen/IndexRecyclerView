@@ -22,9 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        rv.layoutManager = LinearLayoutManager(this)
         val adapter = MyViewAdapter()
-//        rv.addItemDecoration(StickyRecyclerHeadersDecoration(adapter))
         rv.adapter = adapter
         // 准备数据
         adapter.setNewData((0 until 26).mapTo(mutableListOf(), {
@@ -57,32 +55,6 @@ class MainActivity : AppCompatActivity() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  RecyclerView.ViewHolder =
                 ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false))
     }
-
-//    class MyViewAdapter : RecyclerView.Adapter<ItemViewHolder>(), StickyRecyclerHeadersAdapter<ItemViewHolder> {
-//
-//        private val data = (0..60).toList()
-//
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder =
-//                ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false))
-//
-//        override fun getItemCount(): Int = data.size
-//
-//        override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-//            holder.itemView.tv_item.text = position.toString()
-//        }
-//
-//        override fun getHeaderId(position: Int): Long = position.toLong()
-//
-//        override fun onCreateHeaderViewHolder(parent: ViewGroup): ItemViewHolder =
-//                ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header_view, parent, false))
-//
-//        override fun onBindHeaderViewHolder(holder: ItemViewHolder, position: Int) {
-//            holder.itemView.setBackgroundColor(Color.BLACK)
-//            holder.itemView.tv_item.setTextColor(Color.WHITE)
-//            holder.itemView.tv_item.text = position.toString()
-//        }
-//
-//    }
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }
