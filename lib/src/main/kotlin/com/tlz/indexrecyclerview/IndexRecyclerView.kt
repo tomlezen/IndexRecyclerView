@@ -13,8 +13,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.MotionEvent
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 
 /**
  * Created by Tomlezen.
@@ -294,7 +292,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
                 removeItemDecoration(headersDecoration)
             }
 
-            headersDecoration = StickyRecyclerHeadersDecoration(adapter as StickyRecyclerHeadersAdapter<*>)
+            headersDecoration = StickyRecyclerHeadersDecoration(adapter as StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>)
             addItemDecoration(headersDecoration)
         }
         super.setAdapter(adapter)

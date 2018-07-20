@@ -2,7 +2,6 @@ package com.tlz.indexrecyclerview
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 
 /**
  * Created by Tomlezen.

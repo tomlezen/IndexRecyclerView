@@ -3,13 +3,10 @@ package com.tlz.indexrecyclerview.example
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import com.tlz.indexrecyclerview.SampleIndex
 import com.tlz.indexrecyclerview.SampleIndexRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
