@@ -6,3 +6,5 @@
 ```
 implementation 'com.github.tomlezen:IndexRecyclerView:1.0.1'
 ```
+## 使用
+请参考MainActivity的使用
