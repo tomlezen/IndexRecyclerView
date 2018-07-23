@@ -4,7 +4,7 @@
 ## Gradle
 
 ```
-implementation 'com.github.tomlezen:IndexRecyclerView:1.0.1'
+implementation 'com.github.tomlezen:IndexRecyclerView:1.0.2'
 ```
 ## 使用
 请参考MainActivity的使用
