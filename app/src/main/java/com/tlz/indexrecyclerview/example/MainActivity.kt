@@ -1,12 +1,14 @@
 package com.tlz.indexrecyclerview.example
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.tlz.indexrecyclerview.Index
 import com.tlz.indexrecyclerview.SampleIndex
 import com.tlz.indexrecyclerview.SampleIndexRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,13 +21,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = MyViewAdapter()
-        rv.adapter = adapter
-        // 准备数据
-        adapter.setNewData((0 until 26).mapTo(mutableListOf(), {
-            val count = Random().nextInt(8) + 1
-            ItemData( (0 until count).mapTo(mutableListOf(), { it.toString() }), "${('A'.toInt() + it).toChar()}, $count")
-        }))
+        // 正常情况，索引条的索引与数据的索引一致.
+        rv.adapter = MyViewAdapter()
+        // 索引条的索引比数据的索引多的情况(如：数据首字母只有A到F的索引，但右边的索引条显示的是A到Z).
+//        rv.adapter = MyViewAdapter2()
+        // 设置字体
+        rv.indexBarTextTypeface = Typeface.DEFAULT_BOLD
     }
 
     class ItemData(val data: List<String>, index: String) : SampleIndex(index) {
@@ -36,21 +37,73 @@ class MainActivity : AppCompatActivity() {
 
     class MyViewAdapter : SampleIndexRecyclerViewAdapter<ItemData, RecyclerView.ViewHolder, RecyclerView.ViewHolder>() {
 
-        override fun onBindIndexViewHolder(holder:  RecyclerView.ViewHolder, position: Int, item: ItemData) {
+        init {
+            // 设置数据
+           setNewData((0 until 26).mapTo(mutableListOf(), {
+                val count = Random().nextInt(8) + 1
+                ItemData((0 until count).mapTo(mutableListOf(), { it.toString() }), "${('A'.toInt() + it).toChar()}")
+            }))
+        }
+
+        override fun onBindIndexViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData) {
             holder.itemView.setBackgroundColor(Color.GRAY)
             holder.itemView.tv_item.setTextColor(Color.BLACK)
             holder.itemView.tv_item.text = item.index
         }
 
-        override fun onBindViewHolder(holder:  RecyclerView.ViewHolder, position: Int, item: ItemData, subPosition: Int) {
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData, subPosition: Int) {
             holder.itemView.tv_item.text = item.data[subPosition]
         }
 
-        override fun onCreateIndexViewHolder(parent: ViewGroup):  RecyclerView.ViewHolder =
+        override fun onCreateIndexViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
                 ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header_view, parent, false))
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  RecyclerView.ViewHolder =
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
                 ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false))
+    }
+
+
+    /**
+     * 索引条的索引比数据的索引多的情况.
+     */
+    class MyViewAdapter2 : SampleIndexRecyclerViewAdapter<ItemData, RecyclerView.ViewHolder, RecyclerView.ViewHolder>() {
+
+        /** 索引列表,26个字母. */
+        private val indexList = Array(26) {
+            Index(('A'.toInt() + it).toChar().toString())
+        }.toList()
+
+        init {
+            // 设置数据
+            // 数据索引只有13个字母
+            setNewData((0 until 13).mapTo(mutableListOf(), {
+                val count = Random().nextInt(8) + 1
+                ItemData((0 until count).mapTo(mutableListOf(), { it.toString() }), "${('A'.toInt() + it * 2).toChar()}")
+            }))
+        }
+
+        /**
+         * 重写索引列表获取，默认是data.
+         * @return List<Index>
+         */
+        override fun getIndexList(): List<Index> = indexList
+
+        override fun onBindIndexViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData) {
+            holder.itemView.setBackgroundColor(Color.GRAY)
+            holder.itemView.tv_item.setTextColor(Color.BLACK)
+            holder.itemView.tv_item.text = item.index
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData, subPosition: Int) {
+            holder.itemView.tv_item.text = item.data[subPosition]
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+            ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header_view, parent, false))
+
+        override fun onCreateIndexViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
+            ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false))
+
     }
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view)

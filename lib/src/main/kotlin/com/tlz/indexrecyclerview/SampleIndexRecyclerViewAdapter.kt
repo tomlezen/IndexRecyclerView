@@ -3,6 +3,8 @@ package com.tlz.indexrecyclerview
 import android.support.v7.widget.RecyclerView
 
 /**
+ * 默认实现时简单的索引适配器，满足大部分需求，如有其他需求可
+ * 实现IndexRecyclerViewAdapter.
  * Created by Tomlezen.
  * Data: 2018/7/6.
  * Time: 10:56.
@@ -30,8 +32,20 @@ abstract class SampleIndexRecyclerViewAdapter<D : SampleIndex, M : RecyclerView.
     abstract fun onBindIndexViewHolder(holder: N, position: Int, item: D)
     abstract fun onBindViewHolder(holder: M, position: Int, item: D, subPosition: Int)
 
-    override fun getAdapterPositionByIndexPosition(position: Int): Int =
-            if (position == 0) 0 else data.subList(0, position).sumBy { it.getDataCount() }
+    override fun getAdapterPositionByIndexBarPosition(position: Int): Int {
+        // 先找到索引，如果没找到则选择该索引的下一个
+        val index = getIndexList()[position].index
+        var localPosition = 0
+        run Break@{
+            data.forEachIndexed { i, item ->
+                if (i == data.size - 1 || item.index == index || item.index > index) {
+                    localPosition = data.subList(0, i).sumBy { it.getDataCount() }
+                    return@Break
+                }
+            }
+        }
+        return localPosition
+    }
 
     override fun getIndexPositionByAdapterPosition(position: Int): Int {
         var dataPosition = 0
@@ -41,6 +55,26 @@ abstract class SampleIndexRecyclerViewAdapter<D : SampleIndex, M : RecyclerView.
             if (dataPosition > position) {
                 dataPosition = i
                 break
+            }
+        }
+        return dataPosition
+    }
+
+    override fun getIndexBarPositionByAdapterPosition(position: Int): Int {
+        var dataPosition = 0
+        val size = data.size - 1
+        for (i in (0..size)) {
+            dataPosition += data[i].getDataCount()
+            if (dataPosition > position) {
+                dataPosition = i
+                break
+            }
+        }
+        val index = data[dataPosition].index
+        val indexList = getIndexList()
+        for (i in (0 until indexList.size)) {
+            if (indexList[i].index == index) {
+                return i
             }
         }
         return dataPosition

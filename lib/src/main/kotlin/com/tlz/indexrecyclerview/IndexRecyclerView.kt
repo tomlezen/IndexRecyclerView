@@ -4,10 +4,7 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.support.annotation.CallSuper
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -41,6 +38,15 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
 
     private val isAutoDismiss: Boolean
     private val autoDismissTime: Long
+
+    /** 索引字体. */
+    var indexBarTextTypeface: Typeface = Typeface.DEFAULT
+        set(value) {
+            field = value
+            if (isIndexBarShowing) {
+                postInvalidate()
+            }
+        }
 
     /** 画笔. */
     private val drawnPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -91,7 +97,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
 
     private val argbEvaluator by lazy { ArgbEvaluator() }
 
-    /** 索引装饰器. */
+    /** 索引装饰器，可进行索引条和预览框的自定义绘制. */
     var indexDecoration: IndexDecoration = DefIndexDecoration()
 
     init {
@@ -314,6 +320,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
         }
 
         drawnPaint.textSize = indexTextSize.toFloat()
+        drawnPaint.typeface = indexBarTextTypeface
 
         val offsetTop = (itemHeight - (drawnPaint.descent() - drawnPaint.ascent())) / 2
         indexList.map { it.index[0].toString() }.forEachIndexed { index, indexStr ->
@@ -339,6 +346,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
         if (indexList.isNotEmpty()) {
             drawnPaint.color = previewIndexTextColor
             drawnPaint.textSize = previewIndexTextSize.toFloat()
+            drawnPaint.typeface = indexBarTextTypeface
             val indexStr = indexList[selectedPosition].index[0].toString()
             cvs.drawText(indexStr,
                     previewIndexDrawnRectF.centerX() - drawnPaint.measureText(indexStr) / 2,
