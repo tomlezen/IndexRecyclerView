@@ -1,7 +1,6 @@
 package com.tlz.indexrecyclerview.example
 
-import android.graphics.Color
-import android.graphics.Typeface
+import android.graphics.*
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -9,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.tlz.indexrecyclerview.Index
+import com.tlz.indexrecyclerview.IndexDecoration
 import com.tlz.indexrecyclerview.SampleIndex
 import com.tlz.indexrecyclerview.SampleIndexRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,6 +27,16 @@ class MainActivity : AppCompatActivity() {
 //        rv.adapter = MyViewAdapter2()
         // 设置字体
         rv.indexBarTextTypeface = Typeface.DEFAULT_BOLD
+        // 自定义实现索引条背景与预览框背景，默认实现类: DefIndexDecoration
+//        rv.indexDecoration = object: IndexDecoration{
+//            override fun drawIndexBarBg(cvs: Canvas, drawnPaint: Paint, drawnRectF: RectF, drawnColor: Int) {
+//                // 绘制自己的样式，
+//            }
+//
+//            override fun drawPreviewBg(cvs: Canvas, drawnPaint: Paint, drawnRectF: RectF, drawnColor: Int, radius: Float) {
+//                // 绘制自己的样式
+//            }
+//        }
     }
 
     class ItemData(val data: List<String>, index: String) : SampleIndex(index) {
