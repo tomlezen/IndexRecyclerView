@@ -94,6 +94,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
             field = value
             postInvalidate()
         }
+        get() = if (isAutoDismiss) field else 1f
 
     private val argbEvaluator by lazy { ArgbEvaluator() }
 
