@@ -8,7 +8,7 @@ implementation 'com.github.tomlezen:IndexRecyclerView:1.0.2'
 ```
 ## 使用
 
-请参考MainActivity使用
+请参考[MainActivity](https://github.com/tomlezen/IndexRecyclerView/blob/master/app/src/main/java/com/tlz/indexrecyclerview/example/MainActivity.kt)使用
 
 ```
         <!-- 索引条横向margin值 -->
