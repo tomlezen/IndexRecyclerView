@@ -20,6 +20,17 @@
     <integer name="def_index_bar_auto_dismiss_time">2000</integer>
 
     <declare-styleable name="IndexRecyclerView">
+        <!--布局模式. -->
+        <attr name="index_bar_layout_mode" format="enum">
+            <!-- 填充满整个高度. -->
+            <enum name="fill" value="1"/>
+            <!-- 居中. -->
+            <enum name="center" value="2"/>
+            <!-- 居上. -->
+            <enum name="top" value="3"/>
+            <!-- 居下. -->
+            <enum name="bottom" value="4"/>
+        </attr>
         <!-- 索引条横向margin值 -->
         <attr name="index_bar_margin_horizontal" format="dimension"/>
         <!-- 索引条纵向margin值 -->

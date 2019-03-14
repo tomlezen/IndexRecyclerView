@@ -1,6 +1,7 @@
 package com.tlz.indexrecyclerview.example
 
-import android.graphics.*
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -8,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.tlz.indexrecyclerview.Index
-import com.tlz.indexrecyclerview.IndexDecoration
 import com.tlz.indexrecyclerview.SampleIndex
 import com.tlz.indexrecyclerview.SampleIndexRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -49,10 +49,10 @@ class MainActivity : AppCompatActivity() {
 
         init {
             // 设置数据
-           setNewData((0 until 26).mapTo(mutableListOf(), {
-                val count = Random().nextInt(8) + 1
-                ItemData((0 until count).mapTo(mutableListOf(), { it.toString() }), "${('A'.toInt() + it).toChar()}")
-            }))
+           setNewData((0 until 16).mapTo(mutableListOf()) {
+               val count = Random().nextInt(8) + 1
+               ItemData((0 until count).mapTo(mutableListOf()) { it.toString() }, "${('A'.toInt() + it).toChar()}")
+           })
         }
 
         override fun onBindIndexViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData) {
@@ -86,10 +86,10 @@ class MainActivity : AppCompatActivity() {
         init {
             // 设置数据
             // 数据索引只有13个字母
-            setNewData((0 until 13).mapTo(mutableListOf(), {
+            setNewData((0 until 13).mapTo(mutableListOf()) {
                 val count = Random().nextInt(8) + 1
-                ItemData((0 until count).mapTo(mutableListOf(), { it.toString() }), "${('A'.toInt() + it * 2).toChar()}")
-            }))
+                ItemData((0 until count).mapTo(mutableListOf()) { it.toString() }, "${('A'.toInt() + it * 2).toChar()}")
+            })
         }
 
         /**
