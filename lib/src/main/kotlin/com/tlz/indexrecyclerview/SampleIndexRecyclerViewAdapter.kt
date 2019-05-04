@@ -1,6 +1,6 @@
 package com.tlz.indexrecyclerview
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * 默认实现时简单的索引适配器，满足大部分需求，如有其他需求可
@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView
  * Data: 2018/7/6.
  * Time: 10:56.
  */
-abstract class SampleIndexRecyclerViewAdapter<D : SampleIndex, M : RecyclerView.ViewHolder, N : RecyclerView.ViewHolder> : RecyclerView.Adapter<M>(), IndexRecyclerViewAdapter<N> {
+abstract class SampleIndexRecyclerViewAdapter<D : SampleIndex, M : androidx.recyclerview.widget.RecyclerView.ViewHolder, N : androidx.recyclerview.widget.RecyclerView.ViewHolder> : androidx.recyclerview.widget.RecyclerView.Adapter<M>(), IndexRecyclerViewAdapter<N> {
 
     var data = mutableListOf<D>()
         private set

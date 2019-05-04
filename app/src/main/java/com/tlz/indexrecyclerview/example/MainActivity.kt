@@ -3,11 +3,10 @@ package com.tlz.indexrecyclerview.example
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.tlz.indexrecyclerview.Index
 import com.tlz.indexrecyclerview.SampleIndex
 import com.tlz.indexrecyclerview.SampleIndexRecyclerViewAdapter
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    class MyViewAdapter : SampleIndexRecyclerViewAdapter<ItemData, RecyclerView.ViewHolder, RecyclerView.ViewHolder>() {
+    class MyViewAdapter : SampleIndexRecyclerViewAdapter<ItemData, androidx.recyclerview.widget.RecyclerView.ViewHolder, androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
         init {
             // 设置数据
@@ -55,20 +54,20 @@ class MainActivity : AppCompatActivity() {
            })
         }
 
-        override fun onBindIndexViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData) {
+        override fun onBindIndexViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int, item: ItemData) {
             holder.itemView.setBackgroundColor(Color.GRAY)
             holder.itemView.tv_item.setTextColor(Color.BLACK)
             holder.itemView.tv_item.text = item.index
         }
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData, subPosition: Int) {
+        override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int, item: ItemData, subPosition: Int) {
             holder.itemView.tv_item.text = item.data[subPosition]
         }
 
-        override fun onCreateIndexViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
+        override fun onCreateIndexViewHolder(parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder =
                 ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header_view, parent, false))
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
                 ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false))
     }
 
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * 索引条的索引比数据的索引多的情况.
      */
-    class MyViewAdapter2 : SampleIndexRecyclerViewAdapter<ItemData, RecyclerView.ViewHolder, RecyclerView.ViewHolder>() {
+    class MyViewAdapter2 : SampleIndexRecyclerViewAdapter<ItemData, androidx.recyclerview.widget.RecyclerView.ViewHolder, androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
         /** 索引列表,26个字母. */
         private val indexList = Array(26) {
@@ -98,23 +97,23 @@ class MainActivity : AppCompatActivity() {
          */
         override fun getIndexList(): List<Index> = indexList
 
-        override fun onBindIndexViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData) {
+        override fun onBindIndexViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int, item: ItemData) {
             holder.itemView.setBackgroundColor(Color.GRAY)
             holder.itemView.tv_item.setTextColor(Color.BLACK)
             holder.itemView.tv_item.text = item.index
         }
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: ItemData, subPosition: Int) {
+        override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int, item: ItemData, subPosition: Int) {
             holder.itemView.tv_item.text = item.data[subPosition]
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header_view, parent, false))
 
-        override fun onCreateIndexViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
+        override fun onCreateIndexViewHolder(parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false))
 
     }
 
-    class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class ItemViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 }

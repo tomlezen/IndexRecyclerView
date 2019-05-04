@@ -1,6 +1,6 @@
 package com.tlz.indexrecyclerview
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 
 /**
@@ -8,7 +8,7 @@ import android.view.ViewGroup
  * Data: 2018/7/6.
  * Time: 9:37.
  */
-interface IndexRecyclerViewAdapter<T : RecyclerView.ViewHolder> : StickyRecyclerHeadersAdapter<T> {
+interface IndexRecyclerViewAdapter<T : androidx.recyclerview.widget.RecyclerView.ViewHolder> : StickyRecyclerHeadersAdapter<T> {
 
     @Deprecated("", ReplaceWith("getAdapterPositionByIndexPosition(position).toLong()"))
     override fun getHeaderId(position: Int): Long = getIndexPositionByAdapterPosition(position).toLong()

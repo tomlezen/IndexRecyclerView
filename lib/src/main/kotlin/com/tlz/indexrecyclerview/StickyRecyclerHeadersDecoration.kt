@@ -2,10 +2,9 @@ package com.tlz.indexrecyclerview
 
 import android.graphics.Canvas
 import android.graphics.Rect
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by Tomlezen.
@@ -13,14 +12,14 @@ import android.view.ViewGroup
  * Time: 9:52.
  */
 class StickyRecyclerHeadersDecoration(
-        private val adapter: StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>,
-        private val renderInline: Boolean = false
+    private val adapter: StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>,
+    private val renderInline: Boolean = false
 ) : RecyclerView.ItemDecoration() {
 
     var itemSpace = 0
 
-    override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
-        parent?.let {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+        parent.let {
             val position = parent.getChildAdapterPosition(view)
             var headerHeight = 0
 
@@ -30,13 +29,13 @@ class StickyRecyclerHeadersDecoration(
                 headerHeight = getHeaderHeightForLayout(header) - itemSpace
             }
 
-            outRect?.set(0, headerHeight, 0, 0)
+            outRect.set(0, headerHeight, 0, 0)
         }
     }
 
     private fun showHeaderAboveItem(parent: RecyclerView, position: Int): Boolean =
             if (isReverseLayout(parent)) {
-                val itemCount = parent.layoutManager.itemCount
+                val itemCount = parent.layoutManager?.itemCount ?: 0
                 position == itemCount - 1 || adapter.getHeaderId(position + 1) != adapter.getHeaderId(position)
             } else {
                 position == 0 || adapter.getHeaderId(position - 1) != adapter.getHeaderId(position)
@@ -147,7 +146,7 @@ class StickyRecyclerHeadersDecoration(
 
     private fun isReverseLayout(parent: RecyclerView): Boolean {
         val layoutManager = parent.layoutManager
-        return (layoutManager as? LinearLayoutManager)?.reverseLayout ?: false
+        return (layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.reverseLayout ?: false
     }
 
     companion object {

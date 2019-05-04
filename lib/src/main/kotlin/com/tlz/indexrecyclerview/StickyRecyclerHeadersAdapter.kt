@@ -1,6 +1,6 @@
 package com.tlz.indexrecyclerview
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 
 /**
@@ -8,7 +8,7 @@ import android.view.ViewGroup
  * Data: 2018/7/20.
  * Time: 9:50.
  */
-interface StickyRecyclerHeadersAdapter<VH : RecyclerView.ViewHolder> {
+interface StickyRecyclerHeadersAdapter<VH : androidx.recyclerview.widget.RecyclerView.ViewHolder> {
 
     fun getHeaderId(position: Int): Long
 

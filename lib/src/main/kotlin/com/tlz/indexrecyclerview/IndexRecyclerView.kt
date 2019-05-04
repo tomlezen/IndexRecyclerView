@@ -5,11 +5,11 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import android.support.annotation.CallSuper
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.annotation.CallSuper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by Tomlezen.
@@ -128,15 +128,15 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
     ta.recycle()
 
     addOnScrollListener(object : OnScrollListener() {
-      override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-        if (newState != RecyclerView.SCROLL_STATE_IDLE) {
+      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+        if (newState != SCROLL_STATE_IDLE) {
           showIndexBar()
         } else {
           sendDismissMessage()
         }
       }
 
-      override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         if (isIndexAdapter && !isTouchedIndexBar) {
           val firstVisiblePosition = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
           selectedPosition = (adapter as IndexRecyclerViewAdapter<*>).getIndexBarPositionByAdapterPosition(firstVisiblePosition)
@@ -298,12 +298,14 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
   override fun setAdapter(adapter: Adapter<*>?) {
     isIndexAdapter = adapter is IndexRecyclerViewAdapter<*>
     if (isIndexAdapter) {
-      if (headersDecoration != null) {
-        removeItemDecoration(headersDecoration)
+      headersDecoration?.let {
+        removeItemDecoration(it)
       }
 
       headersDecoration = StickyRecyclerHeadersDecoration(adapter as StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>)
-      addItemDecoration(headersDecoration)
+      headersDecoration?.let {
+        addItemDecoration(it)
+      }
     }
     super.setAdapter(adapter)
   }
