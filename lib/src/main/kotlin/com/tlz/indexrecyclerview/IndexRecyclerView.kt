@@ -255,7 +255,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
    */
   private fun showIndexBar() {
     if (isWaitDismiss) {
-      handler.removeCallbacks(dismissAction)
+      handler?.removeCallbacks(dismissAction)
       isWaitDismiss = false
     }
     if (isAutoDismiss && !isIndexBarShowing) {
@@ -270,7 +270,7 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
    */
   private fun hideIndexBar() {
     if (isWaitDismiss) {
-      handler.removeCallbacks(dismissAction)
+      handler?.removeCallbacks(dismissAction)
       isWaitDismiss = false
     }
     if (isAutoDismiss && isIndexBarShowing) {
@@ -283,13 +283,13 @@ class IndexRecyclerView(ctx: Context, attrs: AttributeSet) : RecyclerView(ctx, a
   private fun sendDismissMessage() {
     if (!isWaitDismiss) {
       isWaitDismiss = true
-      handler.postDelayed(dismissAction, autoDismissTime + 500L)
+      handler?.postDelayed(dismissAction, autoDismissTime + 500L)
     }
   }
 
   override fun onDetachedFromWindow() {
     if (isWaitDismiss) {
-      handler.removeCallbacks(dismissAction)
+      handler?.removeCallbacks(dismissAction)
       isWaitDismiss = false
     }
     super.onDetachedFromWindow()
